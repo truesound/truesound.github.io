@@ -1,4 +1,5 @@
 import React, { createRef, useEffect } from "react"
+import styled from '@emotion/styled'
 
 const src = "https://utteranc.es/client.js"
 const repo = "truesound/truesound.github.io"
@@ -12,6 +13,12 @@ type UtteranceAttributesType = {
   crossorigin: string
   async: string
 }
+
+const UtterancesWrapper = styled.div`
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+`
 
 const CommentWidget: React.FC = function () {
   const element = createRef<HTMLDivElement>()
@@ -38,7 +45,7 @@ const CommentWidget: React.FC = function () {
     element.current.appendChild(utterances)
   }, [])
 
-  return <div ref={element} />
+  return <UtterancesWrapper ref={element} />
 }
 
 export default CommentWidget
