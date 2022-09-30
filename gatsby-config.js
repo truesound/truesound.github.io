@@ -3,7 +3,7 @@ module.exports = {
     title: `truesound의 블로그`,
     description: `Frontend 개발자로서 고민과 작업 기록들 그리고 견해를 담은 블로그 입니다.`,
     author: `truesound`,
-    siteUrl: `https://truesound/truesound.github.io/`,
+    siteUrl: `https://truesound.github.io/`,
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -28,7 +28,7 @@ module.exports = {
       options: {
         name: `gatsby-starter-default`,
         short_name: `starter`,
-        start_url: `/`,
+        start_url: `https://truesound.github.io/`,
         background_color: `#663399`,
         // This will impact how browsers show your PWA/website
         // https://css-tricks.com/meta-theme-color-and-trickery/

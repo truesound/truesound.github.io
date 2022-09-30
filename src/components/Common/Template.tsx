@@ -48,6 +48,8 @@ const Template: React.FC<TemplateProps> = function ({
         <meta name="twitter:site" content="truesound" />
         <meta name="twitter:creator" content="truesound" />
 
+        <meta name="google-site-verification" content="NXc0yeE3a-uDQA6GlUry_rbk9_C0igTUFK9aiHNgwvw" />
+
         <html lang="ko" />
       </Helmet>
 

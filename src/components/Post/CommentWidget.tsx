@@ -2,7 +2,7 @@ import React, { createRef, useEffect } from "react"
 import styled from '@emotion/styled'
 
 const src = "https://utteranc.es/client.js"
-const repo = "truesound/truesound.github.io"
+const repo = "truesound.github.io"
 
 type UtteranceAttributesType = {
   src: string
