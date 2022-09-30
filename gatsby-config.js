@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+    title: `truesound의 블로그`,
+    description: `Frontend 개발자로서 고민과 작업 기록들 그리고 견해를 담은 블로그 입니다.`,
+    author: `truesound`,
+    siteUrl: `https://truesound/truesound.github.io/`,
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -75,5 +75,19 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: 'gatsby-plugin-canonical-urls',
+      options: {
+        siteUrl: 'https://truesound.github.io',
+        stripQueryString: true,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        policy: [{ userAgent: '*', allow: '/' }],
+      },
+    },
+    'gatsby-plugin-sitemap',
   ],
 }
