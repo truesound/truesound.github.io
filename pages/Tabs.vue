@@ -1,6 +1,6 @@
 <template>
   <div>
-    <scrollactive :offset="tabsHeight" :duration="500" bezier-easing-value=".5,0,.35,1">
+    <scrollactive :offset="tabsHeight" :duration="500" bezier-easing-value="1, 0.02, 0, 1">
       <StickyTab>
         <template #stickyEl>
           <div ref="tabs" :class="$style.tabs">
