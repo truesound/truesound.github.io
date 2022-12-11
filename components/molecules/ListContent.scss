@@ -1,0 +1,26 @@
+.listContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  .top {
+    flex: none;
+    width: 40px;
+    margin-right: 16px;
+  }
+  .middle {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    p {
+      margin-bottom: 0;
+    }
+  }
+  .tail {
+    flex: none;
+    width: 48px;
+    [class~="v-input"] {
+      margin-top: 0;
+    }
+  }
+}

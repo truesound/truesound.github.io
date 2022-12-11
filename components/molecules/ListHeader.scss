@@ -1,0 +1,9 @@
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #868a93;
+  [class~="v-input"] {
+    margin-top: 0;
+  }
+}
