@@ -14,16 +14,17 @@
       pulling-text="아래로 내려 주세요"
       loading-text="로딩중"
       :immediate-check="true"
-      success-text="성공~!"
+      success-text=" "
       finished-text="자료 없음"
       error-text="에러"
       animation-duration="500"
+      :show-success-text="false"
       head-height="50"
       load-offset="0"
     >
       <v-main :class="$style.main">
         <v-container>
-          <Nuxt />
+          <Nuxt ref="content" />
         </v-container>
       </v-main>
     </vue-loadmore>
@@ -46,9 +47,14 @@ export default {
       error: false,
     }
   },
+  updated() {
+    if (this.finished) {
+      this.$refs.content.$children[0].fetch();
+      this.finished = false;
+    }
+  },
   methods: {
     onRefresh(done) {
-      // console.log(123);
       setTimeout(() => {
         this.fetch();
         this.finished = true
