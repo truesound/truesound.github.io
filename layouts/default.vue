@@ -90,3 +90,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.container {
+  overflow: hidden;
+}
+</style>

@@ -76,8 +76,12 @@ export default {
   .vuejs-loadmore {
     display: none
   }
+  .container {
+    overflow: hidden;
+  }
 }
 </style>
+
 <style lang="scss" module>
 .subHeader {
   position: fixed;
