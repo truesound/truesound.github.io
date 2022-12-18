@@ -23,6 +23,7 @@
     "vue-pull-refresh": "^0.2.7",
     "vue-scrollactive": "^0.9.3",
     "vue-server-renderer": "^2.7.10",
+    "vue-smooth-dnd": "^0.8.1",
     "vue-template-compiler": "^2.7.10",
     "vuedraggable": "^2.24.3",
     "vuejs-loadmore": "^1.0.8",
