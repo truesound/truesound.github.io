@@ -58,7 +58,7 @@ export default {
       else this.type = 'custom-weekly';
     },
     moveCalendar() {
-      this.$refs.calendar.move(10)
+      this.$refs.calendar.move('2022-12-10')
     }
   }
 }
