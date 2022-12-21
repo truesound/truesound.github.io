@@ -30,6 +30,7 @@
       <v-btn @click="prev">이전</v-btn>
       <v-btn @click="next">다음</v-btn>
       <v-btn @click="setToday">오늘</v-btn>
+      <v-btn @click="setGo">11월 21일</v-btn>
     </v-sheet>
 
     <v-card :class="$style.underCard">
@@ -104,6 +105,9 @@
         </v-list-item-content>
       </v-list>
     </v-card>
+
+    <a href="https://supraniti.github.io/vue-dnd-zone/">https://supraniti.github.io/vue-dnd-zone/</a>
+
   </div>
 </template>
 
@@ -199,12 +203,13 @@ export default {
       this.$refs.calendar.next();
     },
     setToday () {
-      this.focus = ''
+      this.value = ''
     },
     onChange() {
       console.log('onChange')
     },
     showDay(e, a) {
+      this.type = 'week';
       // console.log('showDay', e, a);
       // console.log(e.date)
       if (a.target.closest('.v-calendar-weekly__day').classList.contains('filled')) {
@@ -214,6 +219,9 @@ export default {
         this.$vuetify.goTo(topValue);
         // console.log(document.querySelector(`.v-list[data-date="${e.date}"]`))
       }
+    },
+    setGo() {
+      this.value = '2022-11-21';
     }
   }
 }
