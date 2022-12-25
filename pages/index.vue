@@ -75,6 +75,7 @@
           <v-spacer />
           <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
           <v-btn color="primary" nuxt to="/Tabs"> Tabs </v-btn>
+          <v-btn color="primary" nuxt to="/Calendar"> Calendar </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
