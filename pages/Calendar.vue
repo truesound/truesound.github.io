@@ -192,8 +192,8 @@ export default {
         console.log(this.atListOffsetTop); // element의 offsetTop 위치값 지정
         console.log(this.atListDataDate)  // element에 지정된 data-date value 값에 지정해 줄 예정
 
-        if (val === 'month') this.$refs.calendar.$refs.events[this.$refs.calendar.$refs.events.length - 1].closest('.v-calendar-weekly__day')?.classList.add(this.$style.active);
-        if (val === 'week') this.$refs.calendar.$refs.events[this.$refs.calendar.$refs.events.length - 1].closest('.v-calendar-daily_head-day')?.classList.add(this.$style.active);
+        if (val === 'month') this.$refs.calendar.$refs.events[this.$refs.calendar.$refs.events.length - 1]?.closest('.v-calendar-weekly__day')?.classList.add(this.$style.active);
+        if (val === 'week') this.$refs.calendar.$refs.events[this.$refs.calendar.$refs.events.length - 1]?.closest('.v-calendar-daily_head-day')?.classList.add(this.$style.active);
       });
     }
   },
@@ -256,8 +256,19 @@ export default {
           parentEl.classList.add('filled')
         }
       });
+      setTimeout(() => {
+        this.$refs.calendar.$el.querySelectorAll('.filled')?.forEach((el, idx) => {
+          if (el.classList.contains(this.$style.active)) {
+            el.classList.remove(this.$style.active);
+          }
+          if(parseInt(el.querySelector('.v-btn__content').innerText) === parseInt(this.atListDataDate[this.atScrollPoint].substring(this.atListDataDate[this.atScrollPoint].length - 2))) {
+            el.classList.add(this.$style.active);
+          }
+        });
+      }, this.DETECT_TIME);
     }
     if (this.type === 'week') {
+      // console.log(this.atScrollPoint)
       // 각 날짜별 데이터 들어 있는지 구분
       this.$refs.calendar.$refs.events.forEach(e => {
         const parentEl = e.closest('.v-calendar-daily_head-day');
