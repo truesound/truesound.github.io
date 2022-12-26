@@ -1,14 +1,14 @@
-.calendarBox
-  position: fixed
-  left: 0
-  right: 0
-  z-index: 10
-  background-color: #fff
+.calendarArea
+  display: flex
+  [class~="v-sheet"]
+    flex: 1 0 auto
 .calendarList
-  padding-top: 400px
+  display: flex
+  flex-direction: column
+  height: calc(100vh - 525px)
+  overflow-y: scroll
   &.isRolled
-    padding-top: 200px
-
+    height: calc(100vh - 280px)
 .active [class~="v-btn"]:before
   background-color: #345fec
   opacity: 1

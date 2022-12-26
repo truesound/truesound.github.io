@@ -1,39 +1,41 @@
 <template>
   <div>
-    <v-sheet ref="calendarBox" :class="$style.calendarBox">
-      <div v-touch="{left: () => swipe('Left'), right: () => swipe('right')}" class="lighten-2">
-        {{ swipeDirection }}
-      </div>
+    <div :class="$style.calendarArea">
+      <v-sheet ref="calendarBox" :class="$style.calendarBox">
+        <div v-touch="{left: () => swipe('Left'), right: () => swipe('right')}" class="lighten-2">
+          {{ swipeDirection }}
+        </div>
 
-<!--      <v-toolbar-title v-if="$refs.calendar">-->
-<!--        {{ $refs.calendar.title }}-->
-<!--      </v-toolbar-title>-->
+        <!--      <v-toolbar-title v-if="$refs.calendar">-->
+        <!--        {{ $refs.calendar.title }}-->
+        <!--      </v-toolbar-title>-->
 
-      <div :calss="$style.calendarContainer">
-        <v-calendar
-          ref="calendar"
-          v-model="value"
-          v-touch="{left: () => swipe('left'), right: () => swipe('right')}"
-          :show-month-on-first="false"
-          locale="ko"
-          :type="type"
-          :day-format="dayFormat"
-          :events="events"
-          :event-ripple="false"
-          :event-more="false"
-          interval-width="0"
-          color="primary"
-          @change="onChange"
-          @click:date="showDay"
-        ></v-calendar>
-      </div>
+        <div :calss="$style.calendarContainer">
+          <v-calendar
+            ref="calendar"
+            v-model="value"
+            v-touch="{left: () => swipe('left'), right: () => swipe('right')}"
+            :show-month-on-first="false"
+            locale="ko"
+            :type="type"
+            :day-format="dayFormat"
+            :events="events"
+            :event-ripple="false"
+            :event-more="false"
+            interval-width="0"
+            color="primary"
+            @change="onChange"
+            @click:date="showDay"
+          ></v-calendar>
+        </div>
 
-      <v-btn depressed @click="showWeek">전환</v-btn>
-      <v-btn depressed @click="prev">이전</v-btn>
-      <v-btn depressed @click="next">다음</v-btn>
-      <v-btn depressed @click="setToday">오늘</v-btn>
-      <v-btn depressed @click="setGo('2022-11-21')">11월 21일</v-btn>
-    </v-sheet>
+        <v-btn depressed @click="showWeek">전환</v-btn>
+        <v-btn depressed @click="prev">이전</v-btn>
+        <v-btn depressed @click="next">다음</v-btn>
+        <v-btn depressed @click="setToday">오늘</v-btn>
+<!--        <v-btn depressed @click="setGo('2022-11-21')">11월 21일</v-btn>-->
+      </v-sheet>
+    </div>
 
     <v-card ref="calendarList" :class="[$style.calendarList, { [$style.isRolled]: type === 'week'}]">
       <v-list data-date="2022-12-25">
@@ -241,7 +243,7 @@ export default {
     console.log(this.atListOffsetTop); // element의 offsetTop 위치값 지정
     console.log(this.atListDataDate);  // element에 지정된 data-date value 값에 지정해 줄 예정
     this.value = this.atListDataDate[0];
-    window.addEventListener('scroll', this.handleScroll);
+    this.calendarListEl.addEventListener('scroll', this.handleScroll);
   },
   updated() {
     this.calendarEl = this.$refs.calendar.$el;
@@ -281,36 +283,81 @@ export default {
   methods: {
     handleScroll(e) {
       // 위 아래 스크롤 구분
-      const scrollY = window.scrollY;
+      // const scrollY = window.scrollY;
+      const scrollY = this.calendarListEl.scrollTop;
       const direction = scrollY > lastScrollY ? 'down' : 'up';
       lastScrollY = scrollY;
 
       if (direction === 'down') {
-        console.log('dowining = ', this.atListOffsetTop[this.atScrollPoint]);
-        if (window.scrollY + this.boxHeight > this.atListOffsetTop[this.atScrollPoint]) {
-          // 스크롤 되는 값과 페이지 높이 (뷰포트 - application top) 여기서는 734 를 더했을 때
-          // offset값보다 커지면 진입했다고 봄
-          if (window.scrollY + this.viewportHeight - this.$vuetify.application.top > this.atListOffsetTop[this.atScrollPoint + 1] ) {
-            // 여기서 실행
-            this.value = this.atListDataDate[this.atScrollPoint + 1];
-            console.log('checked', this.value);
-            setTimeout(() => {
-              this.calendarEl.querySelectorAll('.filled').forEach(el => {
-                if (el.classList.contains(this.$style.active)) {
-                  el.classList.remove(this.$style.active);
-                }
-                if (parseInt(el.querySelector('.v-btn__content').innerText) === parseInt(this.value.substring(this.value.length - 2))) {
-                  el.classList.add(this.$style.active);
-                }
-              });
-            }, this.DETECT_TIME);
-            this.atScrollPoint++;
-            console.log('downed = ', this.atScrollPoint);
-          }
+        // console.log('dowining = ', this.atListOffsetTop[this.atScrollPoint]);
+        // if (window.scrollY + this.boxHeight > this.atListOffsetTop[this.atScrollPoint]) {
+        //   // 스크롤 되는 값과 페이지 높이 (뷰포트 - application top) 여기서는 734 를 더했을 때
+        //   // offset값보다 커지면 진입했다고 봄
+        //   if (window.scrollY + this.viewportHeight - this.$vuetify.application.top > this.atListOffsetTop[this.atScrollPoint + 1] ) {
+        //     // 여기서 실행
+        //     this.value = this.atListDataDate[this.atScrollPoint + 1];
+        //     console.log('checked', this.value);
+        //     setTimeout(() => {
+        //       this.calendarEl.querySelectorAll('.filled').forEach(el => {
+        //         if (el.classList.contains(this.$style.active)) {
+        //           el.classList.remove(this.$style.active);
+        //         }
+        //         if (parseInt(el.querySelector('.v-btn__content').innerText) === parseInt(this.value.substring(this.value.length - 2))) {
+        //           el.classList.add(this.$style.active);
+        //         }
+        //       });
+        //     }, this.DETECT_TIME);
+        //     this.atScrollPoint++;
+        //     console.log('downed = ', this.atScrollPoint);
+        //   }
+        // }
+
+        // if (this.viewportHeight - this.$vuetify.application.top + scrollY < this.calendarListEl.clientHeight) {
+        //   if (scrollY > 0) {
+        //     console.log('here')
+        //     this.type = 'week';
+        //   }
+        // }
+
+        if (scrollY > this.atListOffsetTop[this.atScrollPoint]) {
+          this.value = this.atListDataDate[this.atScrollPoint];
+          console.log(this.value)
+          setTimeout(() => {
+            this.calendarEl.querySelectorAll('.filled').forEach(el => {
+              if (el.classList.contains(this.$style.active)) {
+                el.classList.remove(this.$style.active);
+              }
+              if (parseInt(el.querySelector('.v-btn__content').innerText) === parseInt(this.value.substring(this.value.length - 2))) {
+                el.classList.add(this.$style.active);
+              }
+            });
+          }, this.DETECT_TIME);
+          this.atScrollPoint++;
         }
+
+
         // 스크롤이 제일 하단에 도달했을 때
-        if (this.viewportHeight - this.$vuetify.application.top + scrollY >= this.calendarListEl.clientHeight) {
-          this.value = this.atListDataDate[this.atListDataDate.length - 1];
+        // if (this.viewportHeight - this.$vuetify.application.top + scrollY >= this.calendarListEl.clientHeight) {
+        //   this.value = this.atListDataDate[this.atListDataDate.length - 1];
+        //   setTimeout(() => {
+        //     this.calendarEl.querySelectorAll('.filled').forEach(el => {
+        //       if (el.classList.contains(this.$style.active)) {
+        //         el.classList.remove(this.$style.active);
+        //       }
+        //       if (parseInt(el.querySelector('.v-btn__content').innerText) === parseInt(this.value.substring(this.value.length - 2))) {
+        //         el.classList.add(this.$style.active);
+        //       }
+        //     });
+        //   }, this.DETECT_TIME);
+        //   this.atScrollPoint = this.atListOffsetTop.length - 1;
+        // }
+
+        // 최하단인 경우
+        if (parseInt(this.calendarListEl.clientHeight + scrollY) >= this.calendarListEl.scrollHeight) {
+               this.type = 'month';
+          setTimeout(() => {
+            this.calendarListEl.scrollTop = this.calendarListEl.scrollHeight;
+          }, 0)
           setTimeout(() => {
             this.calendarEl.querySelectorAll('.filled').forEach(el => {
               if (el.classList.contains(this.$style.active)) {
@@ -327,27 +374,27 @@ export default {
 
 
       if (direction === 'up') {
-        console.log('upping', this.atScrollPoint);
-        let offsetTop;
-        this.atListOffsetTop[this.atScrollPoint - 1] ? offsetTop = this.atListOffsetTop[this.atScrollPoint - 1] : offsetTop = this.atListOffsetTop[0];
-        if (window.scrollY + this.boxHeight <= offsetTop) {
-          // 여기서 실행
-          this.value = this.atListDataDate[this.atScrollPoint - 1];
-          if (!this.value) this.value = this.atListDataDate[0];
-          console.log('checked', this.value);
-          setTimeout(() => {
-            this.calendarEl.querySelectorAll('.filled').forEach(el => {
-              if (el.classList.contains(this.$style.active)) {
-                el.classList.remove(this.$style.active);
-              }
-              if (parseInt(el.querySelector('.v-btn__content').innerText) === parseInt(this.value.substring(this.value.length - 2))) {
-                el.classList.add(this.$style.active);
-              }
-            });
-          }, this.DETECT_TIME);
-          this.atScrollPoint--;
-          if (this.atScrollPoint < 0) this.atScrollPoint = 0;
-          console.log('upped', this.atScrollPoint);
+        // console.log('upping', this.atScrollPoint);
+        // let offsetTop;
+        // this.atListOffsetTop[this.atScrollPoint - 1] ? offsetTop = this.atListOffsetTop[this.atScrollPoint - 1] : offsetTop = this.atListOffsetTop[0];
+        // if (window.scrollY + this.boxHeight <= offsetTop) {
+        //   // 여기서 실행
+        //   this.value = this.atListDataDate[this.atScrollPoint - 1];
+        //   if (!this.value) this.value = this.atListDataDate[0];
+        //   console.log('checked', this.value);
+        //   setTimeout(() => {
+        //     this.calendarEl.querySelectorAll('.filled').forEach(el => {
+        //       if (el.classList.contains(this.$style.active)) {
+        //         el.classList.remove(this.$style.active);
+        //       }
+        //       if (parseInt(el.querySelector('.v-btn__content').innerText) === parseInt(this.value.substring(this.value.length - 2))) {
+        //         el.classList.add(this.$style.active);
+        //       }
+        //     });
+        //   }, this.DETECT_TIME);
+        //   this.atScrollPoint--;
+        //   if (this.atScrollPoint < 0) this.atScrollPoint = 0;
+        //   console.log('upped', this.atScrollPoint);
 
           // 스크롤 되는 값과 페이지 높이 (뷰포트 - application top) 여기서는 734 를 더했을 때
           // offset값보다 작아지면 사라졌다고 봄
@@ -355,9 +402,26 @@ export default {
           // if (window.scrollY + this.viewportHeight - this.$vuetify.application.top < this.atListOffsetTop[this.atScrollPoint] ) {
 
           // }
-        }
-        if (window.scrollY <= 0) {
-          this.value = this.atListDataDate[0];
+        // }
+        // if (window.scrollY <= 0) {
+        //   this.value = this.atListDataDate[0];
+        //   setTimeout(() => {
+        //     this.calendarEl.querySelectorAll('.filled').forEach(el => {
+        //       if (el.classList.contains(this.$style.active)) {
+        //         el.classList.remove(this.$style.active);
+        //       }
+        //       if (parseInt(el.querySelector('.v-btn__content').innerText) === parseInt(this.value.substring(this.value.length - 2))) {
+        //         el.classList.add(this.$style.active);
+        //       }
+        //     });
+        //   }, this.DETECT_TIME);
+        //   this.atScrollPoint = 0;
+        // }
+
+        console.log(123);
+        if (scrollY > this.atListOffsetTop[this.atScrollPoint - 1]) {
+          this.value = this.atListDataDate[this.atScrollPoint - 1];
+          console.log(this.value)
           setTimeout(() => {
             this.calendarEl.querySelectorAll('.filled').forEach(el => {
               if (el.classList.contains(this.$style.active)) {
@@ -368,7 +432,15 @@ export default {
               }
             });
           }, this.DETECT_TIME);
-          this.atScrollPoint = 0;
+          this.atScrollPoint++;
+        }
+
+        // 최상단인 경우
+        if (scrollY <= 0) {
+          this.type = 'month';
+          setTimeout(() => {
+            this.calendarListEl.scrollTop = 0;
+          }, 0)
         }
       }
     },
